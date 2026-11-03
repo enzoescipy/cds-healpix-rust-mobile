@@ -24,11 +24,15 @@ use self::{
   zordercurve::{get_zoc, ZOrderCurve, ZOC},
 };
 
-pub mod bmoc;
+#[cfg(not(feature = "mobile"))]
 pub mod gpu;
-pub mod iter;
+#[cfg(not(feature = "mobile"))]
 pub mod map;
+
+pub mod bmoc;
+pub mod iter;
 pub mod moc;
+#[cfg(not(feature = "mobile"))]
 pub mod sort;
 pub mod zordercurve;
 

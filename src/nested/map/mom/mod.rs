@@ -12,8 +12,11 @@ use std::{
   path::Path,
 };
 
+#[cfg(not(feature = "mobile"))]
 use chrono::{SecondsFormat, Utc};
+#[cfg(not(feature = "mobile"))]
 use colorous::Gradient;
+#[cfg(not(feature = "mobile"))]
 use mapproj::CanonicalProjection;
 use num::{Integer, PrimInt};
 use num_traits::{AsPrimitive, Float, FloatConst, FromPrimitive, ToBytes};

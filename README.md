@@ -1,5 +1,15 @@
 <meta charset="utf-8"/>
 
+# `cdshealpix-rust-mobile`
+This is fork for the **mobile environment** like flutter ffi.
+
+use this repo like : 
+
+```toml
+... features = ["mobile"], default-feature = false}
+```
+
+
 # `cdshealpix-rust`
 
 **[CDS](http://cdsweb.u-strasbg.fr) implementation of the HEALPix tesselation in Rust and modules to generate libraries

@@ -47,20 +47,20 @@ colorous = "1.0"
 
 [dependencies]
 log = { workspace = true }
-mapproj = { workspace = true }  # Projection to wiew skymaps/MOMs
+mapproj = { workspace = true, optional = true }  # Projection to wiew skymaps/MOMs
 memmap2 = { workspace = true }  # Skymaps/MOMs
 rayon = { workspace = true }    # Parallelism (sort)
 thiserror = { workspace = true } # Error handling
-colorous = { workspace = true }  # Color map for PNG skymap/MOM
+colorous = { workspace = true, optional = true }  # Color map for PNG skymap/MOM
 
 katex-doc = "0.1.0"
 # MOC specific
-base64 = "0.22"     # Added for Compressed MOC
+base64 = { version = "0.22", optional = true }     # Added for Compressed MOC
 num = "0.4"         # Added for MOC
 num-traits = "0.2"  # Added for MOC
 # Skymaps
 byteorder = "1.5"
-png = "0.17"
+png = { version = "0.17", optional = true }
 # Compression/decompression
 flate2 = "1.0"
 # Serialization/Deserialization
@@ -70,7 +70,7 @@ toml = "0.8"
 # MOM specific
 itertools = "0.14"
 # For date in FITS written files
-chrono = "0.4"
+chrono = { version = "0.4", optional = true }
 
 
 
@@ -88,6 +88,9 @@ name = "zordercurve"
 harness = false
 
 [features]
+default = ["full"]
+full = ["dep:png", "dep:colorous", "dep:mapproj", "dep:chrono", "dep:base64"]
+mobile = []
 
 # See opti here: https://github.com/johnthagen/min-sized-rust
 [profile.release]

@@ -20,6 +20,7 @@ use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use chrono::{DateTime, SecondsFormat, Utc};
 use log::debug;
 
+#[cfg(not(feature = "mobile"))]
 use crate::{
   nested::{
     hash,
@@ -36,8 +37,8 @@ use crate::{
     },
     to_range,
   },
-  nside_square_unsafe,
 };
+use crate::nside_square_unsafe;
 
 /// A very basic and simple BMOC Builder: we push elements in it assuming that we provide them
 /// in the right order, without duplicates and small cells included in larger cells.
@@ -539,6 +540,7 @@ impl BMOC {
   }
 
   /// Test the given point and return its "Status": in, out of the MOC or maybe.
+  #[cfg(not(feature = "mobile"))]
   pub fn test_coo(&self, lon: f64, lat: f64) -> Status {
     let h_raw = build_raw_value(
       self.depth_max,
@@ -1173,6 +1175,7 @@ impl BMOC {
   /// Transform this (B)MOC as a simple (sorted) array of ranges
   /// (WARNING: the ranges are at the MOC depth, not at the depth 29).
   /// During the operation, we loose the `flag` information attached to each BMOC cell.  
+  #[cfg(not(feature = "mobile"))]
   pub fn to_ranges(&self) -> Box<[std::ops::Range<u64>]> {
     let mut ranges: Vec<std::ops::Range<u64>> = Vec::with_capacity(self.entries.len());
     let mut prev_min = 0_u64;
@@ -1208,6 +1211,7 @@ impl BMOC {
 
   /// Transform this (B)MOC as a simple (sorted) array of ranges.
   /// Ranges containing different flag values are split in sub-ranges
+  #[cfg(not(feature = "mobile"))]
   pub fn to_flagged_ranges(&self) -> Vec<(std::ops::Range<u64>, bool)> {
     let mut ranges: Vec<(std::ops::Range<u64>, bool)> = Vec::with_capacity(self.entries.len());
     let mut prev_min = 0_u64;
@@ -1417,6 +1421,7 @@ impl BMOC {
 
   /// FITS serialization aiming at been the most efficient (in space and read speed) and made first
   /// of all for internal usage.
+  #[cfg(not(feature = "mobile"))]
   pub fn to_fits<W: Write>(&self, mut writer: W) -> Result<(), IoError> {
     self
       .write_fits_header(&mut writer)
@@ -1424,6 +1429,7 @@ impl BMOC {
       .and_then(|n_bytes_written| write_final_padding_ioerr(writer, n_bytes_written))
   }
 
+  #[cfg(not(feature = "mobile"))]
   fn write_fits_header<W: Write>(&self, mut writer: W) -> Result<(), IoError> {
     // Prepare the header
     let mut header_block = [b' '; 2880];
@@ -1483,12 +1489,14 @@ impl BMOC {
     Ok(self.entries.len() * elem_byte_size)
   }
 
+  #[cfg(not(feature = "mobile"))]
   pub fn from_fits_file<P: AsRef<Path>>(path: P) -> Result<Self, FitsError> {
     File::open(path)
       .map_err(FitsError::Io)
       .and_then(|file| Self::from_fits(BufReader::new(file)))
   }
 
+  #[cfg(not(feature = "mobile"))]
   pub fn from_fits<R: BufRead>(mut reader: R) -> Result<Self, FitsError> {
     let mut raw_header = [b' '; 2880];
     // Parse header
@@ -1583,12 +1591,14 @@ impl BMOC {
   ///     + any primitive type column
   ///     + a column of pointer pointing to the FITS HEAP for variable size content (e.g CSV, gzipped CSV, VOTable, ...)
   /// * Very similar to EXPLICIT skymaps by at various orders?!!
+  #[cfg(not(feature = "mobile"))]
   pub fn to_bintable_fits<W: Write>(&self, mut writer: W) -> Result<(), IoError> {
     self
       .write_bintable_fits_header(&mut writer)
       .and_then(|()| self.write_bintable_fits_data(&mut writer))
       .and_then(|n_bytes_written| write_final_padding_ioerr(writer, n_bytes_written))
   }
+  #[cfg(not(feature = "mobile"))]
   fn write_bintable_fits_header<W: Write>(&self, mut writer: W) -> Result<(), IoError> {
     write_primary_hdu_ioerr(&mut writer)?;
     let mut header_block = [b' '; 2880];
@@ -1653,6 +1663,7 @@ impl BMOC {
     Ok(n * (size_of::<u64>() + size_of::<u8>()))
   }
 
+  #[cfg(not(feature = "mobile"))]
   pub fn to_csv<W: Write>(&self, mut writer: W) -> Result<(), IoError> {
     writeln!(
       &mut writer,
