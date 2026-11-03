@@ -9,6 +9,7 @@ use std::{
   path::Path,
 };
 
+#[cfg(not(feature = "mobile"))]
 pub use colorous::Gradient;
 use mapproj::{
   CanonicalProjection, CenteredProjection, ImgXY, LonLat, img2celestial::Img2Celestial,
@@ -755,6 +756,7 @@ where
 ///   which depends on the projection. For unbounded projections, de default value
 ///   is `(-PI..PI, -PI..PI)`.
 /// * `writer`: the writer in which the image is going to be written
+#[cfg(not(feature = "mobile"))]
 pub fn to_skymap_png<'a, P, S, W>(
   skymap: &'a S,
   img_size: (u16, u16),
@@ -867,6 +869,7 @@ where
 ///   which depends on the projection. For unbounded projections, de default value
 ///   is `(-PI..PI, -PI..PI)`.
 /// * `writer`: the writer in which the image is going to be written
+#[cfg(not(feature = "mobile"))]
 pub fn to_mom_png<'a, P, M, W>(
   mom: &'a M,
   img_size: (u16, u16),

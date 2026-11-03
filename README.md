@@ -6,7 +6,7 @@ This is fork for the **mobile environment** like flutter ffi.
 use this repo like : 
 
 ```toml
-... features = ["mobile"], default-feature = false}
+... features = ["mobile"], default-features = false}
 ```
 
 

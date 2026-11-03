@@ -984,6 +984,7 @@ pub fn zuniq_from_u64_to_u32(zuniq: u64) -> u32 {
 
 #[cfg(test)]
 mod tests {
+  #[cfg(not(feature = "mobile"))]
   use mapproj::pseudocyl::mol::Mol;
 
   use super::{

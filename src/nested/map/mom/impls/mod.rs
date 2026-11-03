@@ -8,6 +8,7 @@ pub mod zvec;
 mod tests {
   use itertools::Itertools;
 
+  #[cfg(not(feature = "mobile"))]
   use mapproj::pseudocyl::mol::Mol;
 
   use crate::nested::map::{

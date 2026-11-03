@@ -10,10 +10,12 @@ use std::{
   fmt::Debug,
 };
 
+#[cfg(not(feature = "mobile"))]
 use colorous::Gradient;
 use log::warn;
 use num_traits::{ToBytes, Zero};
 
+#[cfg(not(feature = "mobile"))]
 use mapproj::CanonicalProjection;
 
 #[cfg(not(target_arch = "wasm32"))]

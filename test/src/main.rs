@@ -1,3 +1,4 @@
+#[cfg(not(feature = "mobile"))]
 use base64::{decode, encode, DecodeError};
 
 use std::cmp::max;

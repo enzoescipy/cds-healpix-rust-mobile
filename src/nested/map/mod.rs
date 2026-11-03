@@ -76,6 +76,7 @@ mod tests {
     img::{ColorMapFunctionType, PosConversion},
     skymap::SkyMapEnum,
   };
+  #[cfg(not(feature = "mobile"))]
   use mapproj::pseudocyl::mol::Mol;
 
   #[test]

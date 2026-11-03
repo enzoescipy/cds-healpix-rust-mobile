@@ -871,6 +871,7 @@ where
 mod tests {
   use std::f64::consts::PI;
 
+  #[cfg(not(feature = "mobile"))]
   use mapproj::pseudocyl::mol::Mol;
 
   use crate::{

@@ -34,6 +34,7 @@ use std::{
   time::SystemTime,
 };
 
+#[cfg(not(feature = "mobile"))]
 use chrono::{DateTime, SecondsFormat, Utc};
 use log::debug;
 use memmap2::{Mmap, MmapOptions};

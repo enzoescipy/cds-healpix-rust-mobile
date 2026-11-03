@@ -15,9 +15,11 @@ use std::{
   vec::IntoIter,
 };
 
+#[cfg(not(feature = "mobile"))]
 use base64::{engine::general_purpose::STANDARD, DecodeError, Engine};
-use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
+#[cfg(not(feature = "mobile"))]
 use chrono::{DateTime, SecondsFormat, Utc};
+use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use log::debug;
 
 #[cfg(not(feature = "mobile"))]
@@ -2265,10 +2267,12 @@ impl CompressedMOC {
     self.moc.len()
   }
 
+  #[cfg(not(feature = "mobile"))]
   pub fn to_b64(&self) -> String {
     STANDARD.encode(&self.moc)
   }
 
+  #[cfg(not(feature = "mobile"))]
   pub fn from_b64(b64_encoded: String) -> Result<CompressedMOC, DecodeError> {
     let decoded = STANDARD.decode(b64_encoded)?;
     let depth_max = decoded[0];
